@@ -1,0 +1,118 @@
+table.main {
+	margin-left:auto; 
+	margin-right:auto;
+	text-align:center;
+	width:95%;
+}
+td.leftctrl{
+	text-align: right;
+	vertical-align: top;
+}
+div.board {
+    border: 1px solid black;
+	height: 130px;
+	min-width: 750:px;
+}
+div.hand {
+	height: 100px;
+	min-width: 770:px;
+}
+div.hand-card {
+	display: inline-block;
+    border: 1px solid black;
+	height: 100px;
+	width: 70px;
+	text-align: center;
+	vertical-align: top;
+	margin-right: 3px;
+    margin-left: 3px;
+}
+div.face {
+	text-align: center;
+	vertical-align: top;
+	height: 100px;
+	width: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	position: relative;
+}
+div.weap{
+	text-align: center;
+	vertical-align: middle;
+	height: 60px;
+	width: 60px;
+	border: 1px solid black;
+	display: inline-block;
+	position: relative;
+	margin-top: 10px;
+}
+div.weap-buffer{
+	width:60px;
+	display: inline-block;
+}
+div.atk{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	text-align:left;
+	display: inline-block;
+	margin-left: 2px;
+}
+div.hp{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	text-align:right;
+	display: inline-block;
+	margin-right: 2px;
+}
+div.secrets{
+	display:inline-block;
+    position: absolute;
+    left:0;
+    right:0;
+}
+div.mana{
+	display:inline-block;
+    float:right
+}
+div.min{
+	text-align: center;
+	vertical-align: top;
+	height: 110px;
+	width: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	position: relative;
+	margin-top: 10px;
+	margin-right: 3px;
+    margin-left: 3px;
+}
+div.min-name{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	text-align:center;
+	display: inline-block;
+	margin-right: 2px;
+}
+
+.ht:hover .tooltip {
+    display:block;
+}
+
+.tooltip {
+    display: none;
+    color: red;
+    margin-left: 28px; /* moves the tooltip to the right */
+    margin-top: 15px; /* moves it down */
+    position: absolute;
+    z-index: 1000;
+}
+
+.ctrl-part{
+	padding-right: 5px;
+}

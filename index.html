@@ -1,0 +1,178 @@
+<html>
+<head>
+<title>Yogg-Saron Simulator 2016</title>
+<script src="ys.js" type="text/javascript"></script>
+<script src="sim.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body onload="reset(true)">
+<div style="text-align:center">
+<div style="text-align:left"><span style="font-size: 80%;"><a href="http://www.reddit.com/u/UristMasterRace">/r/UristMasterRace</a> - Version 1.5 - <a href="https://www.reddit.com/r/hearthstone/comments/4e22la/new_host_yoggsaron_simulator_actually_simulates/">More info</a></span></div>
+<div id = "boardctrl">
+<!--Board State Controls-->
+<table style="text-align:right; margin-left:auto;">
+<tr><td colspan=99 style="text-align:left"><b>Heroes<b></td></tr>
+<tr>
+<td class = "ctrl-part">My HP&nbsp;<input type="number" id="defmehp" value="30" onchange="spinnerChange(this)" min="1" max="30"></td>
+<td class = "ctrl-part">My Armor&nbsp;<input type="number" id="defmearm" value="0" onchange="spinnerChange(this)" min="0" max="30"></td>
+<td class = "ctrl-part">My Weapon&nbsp;<input type="number" id="defmeweap" value="0" onchange="spinnerChange(this)" min="0" max="10">
+<input type="number" id="defmedur" value="0" onchange="spinnerChange(this)" min="0" max="10"></td>
+<td class = "ctrl-part">My Hand&nbsp;<input type="number" id="defmehand" value="2" onchange="spinnerChange(this)" min="0" max="10"></td>
+<td class = "ctrl-part">My Deck&nbsp;<input type="number" id="defmedeck" value="15" onchange="spinnerChange(this)" min="0" max="30"></td>
+<td></td>
+</tr>
+<tr>
+<td class = "ctrl-part">Enemy HP&nbsp;<input type="number" id="defophp" value="30" onchange="spinnerChange(this)" min="1" max="30"></td>
+<td class = "ctrl-part">Enemy Armor&nbsp;<input type="number" id="defoparm" value="0" onchange="spinnerChange(this)" min="0" max="30"></td>
+<td class = "ctrl-part">Enemy Weapon&nbsp;<input type="number" id="defopweap" value="0" onchange="spinnerChange(this)" min="0" max="10">
+<input type="number" id="defopdur" value="0" onchange="spinnerChange(this)" min="0" max="10"></td>
+<td class = "ctrl-part">Enemy Hand&nbsp;<input type="number" id="defophand" value="2" onchange="spinnerChange(this)" min="0" max="10"></td>
+<td class = "ctrl-part">Enemy Deck&nbsp;<input type="number" id="defopdeck" value="15" onchange="spinnerChange(this)" min="0" max="30"></td>
+<td class = "ctrl-part">Enemy Mana&nbsp;<input type="number" id="defopmana" value="10" onchange="spinnerChange(this)" min="1" max="10"></td>
+</tr>
+<tr>
+<td colspan=99>
+<input type="button" value="Reset ALL to Default" onclick="defaultButton()">&nbsp;|
+<input type="button" value="Update" onclick="updateButton()">
+</td>
+</tr>
+<tr><td colspan=99 style="text-align:left"><b>Add a minion<b></td></tr>
+<tr>
+<!-- name, atk, maxhp, damage, tribe, taunt-->
+<td></td>
+<td class = "ctrl-part">Name&nbsp;<input type="text" id="minname" maxlength="40"></td>
+<td class = "ctrl-part">Base Stats&nbsp;<input type="number" id="minatk" value="3" onchange="spinnerChange(this)" min="0" max="30">
+<input type="number" id="minhp" value="3" onchange="spinnerChange(this)" min="1" max="30"></td>
+<td class = "ctrl-part">Damage&nbsp;<input type="number" id="mindam" value="0" onchange="spinnerChange(this)" min="0" max="30"></td>
+<td class = "ctrl-part">Taunt&nbsp;<input type="checkbox" id="mintaunt"></td>
+<td class = "ctrl-part">Tribe&nbsp;<input type="text" id="mintribe" maxlength="10"></td>
+</tr>
+<td colspan=99>
+<input type="button" value="Remove my last minion" onclick="removelast(true)">&nbsp;
+<input type="button" value="Remove enemy's last minion" onclick="removelast(false)">&nbsp;|
+<input type="button" value="Add for Me" onclick="addmin(true)">&nbsp;
+<input type="button" value="Add for Enemy" onclick="addmin(false)">
+</td>
+</table>
+<hr>
+</div>
+<table style="width:100%">
+<tr><td colspan=99></td></tr>
+<tr>
+<!--YS Controls/Upcoming-->
+<td class = "leftctrl">
+	<div id = "summonctrl">
+		<input type="number" id="yoggspells" value="10" onchange="spinnerChange(this)" min="1" max="50">
+		<input type="button" value="Summon Yogg-Saron!" onclick="summonButton()">
+	</div>
+	<div id = "nextctrl" style="display: none">
+		<input id = "nextbtn" type="button" value="Next" onclick="nextButton()">
+	</div>
+	<div id = "upcomingdiv">yogg spells</div>
+</td>
+<td style="width:80%">
+<table class="main">
+<!--Opponent Cards-->
+<tr>
+<td>
+	<div class = "hand" id = "opcards">cards</div>
+</td>
+<!--Side board-->
+<td rowspan=99 id = "decks">
+	18<br><br>20
+</td>
+</tr>
+<!--Opponent Face-->
+<tr>
+<td>
+	<div class = "weap" id = "opweapdiv">
+		<div class = "atk" id = "opweapatk">3</div>
+		<div class = "hp" id = "opweapdur">2</div>
+	</div>
+	<div class = "face">
+		<div class = "min-name" id = "opname"><br>Frozen</div>
+		<div class = "atk" id = "opatk">3</div>
+		<div class = "hp" id = "ophp">10<br>30</div>
+	</div>
+	<div class = "weap-buffer" id = "opweapbuff"></div>
+</td>
+</tr>
+<!--Opponent secrets/mana-->
+<tr>
+<td>
+	<div style="text-align:center; position:relative">
+		<div class = "secrets" id = "opsecrets">secrets</div>
+		<div class = "mana" id = "opmana">mana</div>
+	<div>
+</td>
+</tr>
+<!--Opponent Board-->
+<tr>
+<td>
+	<div class="board" id = "opboard">
+		<div class = "min">
+			<div class = "min-name">Spider Tank<br>Divine Shield And some other Sutff<br>Taunt</div>
+			<div class = "atk">3</div>
+			<div class = "hp">4</div>
+		</div>
+	</div>
+</td>
+</tr>
+<!--My Board-->
+<tr>
+<td>
+	<div class="board" id = "myboard">
+		<div class = "min">
+			<div class = "min-name">Spider Tank</div>
+			<div class = "atk">3</div>
+			<div class = "hp">4</div>
+		</div>
+	</div>
+</td>
+</tr>
+<!--My secrets/mana-->
+<tr>
+<td>
+	<div style="text-align:center; position:relative">
+		<div class = "secrets" id = "mysecrets">secrets</div>
+		<div class = "mana" id = "mymana">mana</div>
+	<div>
+</td>
+</tr>
+<!--My Face-->
+<tr>
+<td>
+	<div class = "weap" id = "myweapdiv">
+		<div class = "atk" id = "myweapatk">3</div>
+		<div class = "hp" id = "myweapdur">2</div>
+	</div>
+	<div class = "face">
+		<div class = "min-name" id = "myname">Me</div>
+		<div class = "atk" id = "myatk">3</div>
+		<div class = "hp" id = "myhp">10<br>30</div>
+	</div>
+	<div class = "weap-buffer" id = "myweapbuff"></div>
+</td>
+</tr>
+<!--My Cards-->
+<tr>
+<td>
+	<div class = "hand" id = "mycards">cards</div>
+</td>
+</tr>
+<!--Notes-->
+<tr>
+<td>
+	<div id = "mynotes">cards</div>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<div>
+	<textarea style="width:80%; resize: none;" id = "histarea" readonly rows = 20></textarea>
+</div>
+</div>
+</body>
+</html>
