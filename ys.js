@@ -782,7 +782,6 @@ var spells = [
 	dotoenemymins(game, function (m) {
 		m.damage(d,game);
 	});
-	game.op.damage(d,null);
 	return this.name + " for "+d;
 }},
 {name:"Blessed Champion",effect: function(game){
@@ -1256,9 +1255,7 @@ var spells = [
 	if (game.me.board.size() > 6) return this.name + " fizzled";
 	var i = 3;
 	while (i--){
-		var m = new Minion("Treant",2,2);
-		m.charge = true;
-		game.summon(true,m);
+		game.summon(true, new Minion("Treant",2,2));
 	}
 	return this.name;
 }},
